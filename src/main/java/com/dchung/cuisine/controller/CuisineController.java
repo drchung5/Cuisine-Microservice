@@ -22,6 +22,7 @@ public class CuisineController {
 
   @GetMapping(value= "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<Cuisine> getCuisine(@PathVariable("id") Long id) {
+    System.out.println("Cusine Service: getCuisine("+id+")");
     Optional<Cuisine> cusineWrapper = cuisineRepository.findById(id);
     if(!cusineWrapper.isPresent()) {
       return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -31,6 +32,7 @@ public class CuisineController {
 
   @GetMapping(produces= MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity getAllCuisines() {
+    System.out.println("Cusine Service: getAllCuisines()");
     Iterable<Cuisine> cuisines = cuisineRepository.findAll();
     if( Iterables.size(cuisines) == 0 ) {
       return new ResponseEntity(HttpStatus.NOT_FOUND);
@@ -42,6 +44,7 @@ public class CuisineController {
   public ResponseEntity<Void> insertCuisine(
       @RequestBody Cuisine cuisine,
       UriComponentsBuilder builder) {
+    System.out.println("Cusine Service: insertCuisine("+cuisine.getName()+")");
     Cuisine c = cuisineRepository.save(cuisine);
     HttpHeaders headers = new HttpHeaders();
     headers.setLocation(builder.path("/cuisines/{id}").
